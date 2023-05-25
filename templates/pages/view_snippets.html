@@ -67,10 +67,24 @@
 
         <div class="row">
             <div class="col">
-                <p>На данной страницы будут отображаться все созданные сниппеты.</p>
-                <p>Пока тут просто пример, но скоро заменим реальными сниппетами из БД!</p>
+                <p>На данной странице отображаются все созданные сниппеты.</p>
                 <hr>
             </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form method="get" action="">
+                    <select name="lang">
+                        <option>----</option>
+                        <option value="js" {% if lang == "js" %} selected {% endif %} >JavaScript</option>
+                        <option value="py" {% if lang == "py" %} selected {% endif %}>Python</option>
+                        <option value="cpp" {% if lang == "cpp" %} selected {% endif %}>C++</option>
+                    </select>
+                    <button type="submit">Применить</button>
+                    <a href="{% url 'snippets-list' %}">Сбросить</a>
+                </form>
+            </div>
+
         </div>
 
         <div class="row">
@@ -79,8 +93,15 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Название</th>
+                        <th scope="col">
+                            <a href="?sort=name">Название</a>
+                            <i class="fa-solid fa-caret-up"></i>
+                            <i class="fa-solid fa-caret-down"></i>
+                        </th>
+                        <th scope="col">Автор</th>
+                        <th scope="col">Язык</th>
                         <th scope="col">Дата создания</th>
+                        <th scope="col">Приватный</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,7 +114,10 @@
                                     <i style="color: darkred" class="fa-solid fa-trash-can"></i>
                                 </a>
                             </td>
+                            <td>{{ snippet.user.username }}</td>
+                            <td>{{ snippet.lang }}</td>
                             <td>{{ snippet.creation_date }}</td>
+                            <td>{{ snippet.private }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
