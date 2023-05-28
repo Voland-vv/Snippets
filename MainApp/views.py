@@ -3,7 +3,9 @@ from django.shortcuts import render, redirect
 from MainApp.models import Snippet, Comment
 from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
 from django.contrib import auth
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def index_page(request):
@@ -13,6 +15,7 @@ def index_page(request):
 
 def snippets_page(request):
     snippets = Snippet.objects.all()
+    users = User.objects.annotate(num_snippets=Count('snippets')).exclude(num_snippets=0)
     lang = request.GET.get('lang')
     sort = request.GET.get('sort')
     if lang:
@@ -23,6 +26,8 @@ def snippets_page(request):
         'pagename': 'Просмотр сниппетов',
         'snippets': snippets,
         'lang': lang,
+        'users': users,
+        'sort': sort,
     }
     return render(request, 'pages/view_snippets.html', context)
 
@@ -124,7 +129,13 @@ def comment_add(request):
             return redirect(request.META.get('HTTP_REFERER', '/'))
 
 
-
+def users_rate(request):
+    users = User.objects.all().annotate(num_snippets=Count('snippets'))
+    context = {
+        'pagename': 'Рейтинг пользователей',
+        'users': users,
+    }
+    return render(request, 'pages/users_rate.html', context)
 
 
 

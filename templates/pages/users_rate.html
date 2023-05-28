@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1>{{ pagename }}</h1>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table border="1">
+                    <tr>
+                        <th>User.id</th>
+                        <th>Username</th>
+                        <th>Всего сниппетов</th>
+                    </tr>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.num_snippets }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

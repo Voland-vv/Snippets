@@ -8,14 +8,14 @@
                 <hr>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <form action="" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Создать пользователя">
-            </form>
+        <div class="row">
+            <div class="col">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Создать пользователя">
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}
